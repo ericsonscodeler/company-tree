@@ -1,7 +1,7 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useQuery } from 'react-query';
 import Input from "../Components/Input";
-import { ILocation } from "../types";
+import { IAsset, ILocation } from "../types";
 import { buildTree } from "../utils/functionBuildTree";
 import Tree from "../components/Tree";
 
@@ -10,7 +10,7 @@ export const Company = () => {
   const location = useLocation();
   const name = location.state?.name;
 
-  const { isLoading, error, data: dataLocations } = useQuery<ILocation[]>(
+  const { isLoading: loadingLocations, error: errorLocations, data: dataLocations } = useQuery<ILocation[]>(
     `treeDataLocation${name}`, 
     () =>
       fetch(`http://fake-api.tractian.com/companies/${id}/locations`).then(res =>
@@ -18,7 +18,16 @@ export const Company = () => {
       )
   );
 
-  const treeData = dataLocations ? buildTree(dataLocations) : [];
+  const { isLoading: loadingAssets, error: errorAssets, data: dataAssets } = useQuery<IAsset[]>(
+    `treeDataAssets${name}`,
+    () => 
+      fetch(`http://fake-api.tractian.com/companies/${id}/assets`).then(res => res.json())
+  );
+
+  const treeData = dataLocations && dataAssets ? buildTree(dataLocations, dataAssets) : [];
+
+  console.log(treeData)
+
 
   return (
     <div>
@@ -28,15 +37,11 @@ export const Company = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full h-full p-4 bg-gray-300">
         <div className="w-full h-full p-4 bg-white border border-sky-500">
-          <>
-            <Input />
-            {isLoading && <p>Loading...</p>}
-            {error && <p>Error loading data</p>}
-            {dataLocations && <Tree nodes={treeData} />}
-          </>
+          <Input />
+          {loadingLocations || loadingAssets ? <p>Loading...</p> : errorLocations || errorAssets ? <p>Error loading data</p> : <Tree nodes={treeData} />}
         </div>
         <div className="w-full h-full p-4 bg-white border border-sky-500">
-          <p>conteúdo</p>
+          <p>conteudo</p>
         </div>
       </div>
     </div>
