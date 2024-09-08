@@ -10,7 +10,8 @@ export interface IAsset {
   parentId?: string; 
   locationId?: string; 
   sensorType?: string;
-  status?: string;
+  sensorId?: string;
+  status?: 'alert' | 'operating' ;
   gatewayId?: string;
 }
 
@@ -21,5 +22,6 @@ export interface ITreeNode {
   children?: ITreeNode[];
   status?: string; 
   sensorType?: string;
+  sensorId?: string;
   gatewayId?: string; 
 }

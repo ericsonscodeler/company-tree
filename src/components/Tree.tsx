@@ -5,14 +5,12 @@ interface TreeProps {
   onNodeSelect: (node: ITreeNode) => void
 }
 
-const Tree: React.FC<TreeProps> = ({ nodes, onNodeSelect }) => {
+export const Tree: React.FC<TreeProps> = ({ nodes, onNodeSelect }) => {
   return (
-    <div className="w-96 ml-4">
+    <div className="w-96">
       {nodes.map(node => (
         <TreeNode key={node.id} node={node} onNodeSelect={onNodeSelect}/>
       ))}
     </div>
   );
 };
-
-export default Tree;
