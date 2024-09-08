@@ -24,12 +24,18 @@ const TreeNode: React.FC<ITreeNodeProps> = ({ node }) => {
     }
   };
 
+  const shouldDisplayChevron = () => {
+    return (node.type === 'location' || node.type === 'asset') && node.children && node.children.length > 0;
+  };
+
   return (
     <div className="ml-4">
       <div className="flex flex-row items-center space-x-2 py-2">
-        <span onClick={toggleOpen} className="cursor-pointer">
-          {isOpen ? <ChevronDown /> : <ChevronUp />}
-        </span>
+        {shouldDisplayChevron() && (
+          <span onClick={toggleOpen} className="cursor-pointer">
+            {isOpen ? <ChevronDown /> : <ChevronUp />}
+          </span>
+        )}
         <span>{getIcon()}</span>
         <span>{node.name}</span>
       </div>
