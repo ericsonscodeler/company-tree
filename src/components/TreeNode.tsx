@@ -20,8 +20,6 @@ const TreeNode: React.FC<ITreeNodeProps> = ({ node, onNodeSelect }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  console.log(node)
-
   const getIcon = (node: ITreeNode) => {
 
   switch (true) {

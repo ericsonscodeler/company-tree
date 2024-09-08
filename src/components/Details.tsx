@@ -10,8 +10,6 @@ interface DetailsProps {
 }
 
 export const Details: React.FC<DetailsProps> = ({ node }) => {
-
-  console.log(node)
   return (
    <div>
     <div className='flex flex-row items-center border w-full h-full p-5'>      
