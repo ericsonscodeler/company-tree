@@ -1,14 +1,11 @@
-import { Tree } from "./components/Tree"
-
-
-/// lebrar de colocar o APP router aqui
+import Header from "./components/Header"
+import AppRoutes from "./routes"
 function App() {
   return (
-    <>
-      <div>
-        <Tree /> 
-      </div>
-    </>
+      <>
+        <Header />
+        <AppRoutes />
+      </>
   )
 }
 

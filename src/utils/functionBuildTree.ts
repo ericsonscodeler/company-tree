@@ -1,56 +1,44 @@
 import { IAsset, ILocation, ITreeNode } from '../types';
 
 export const buildTree = (locations: ILocation[], assets: IAsset[]): ITreeNode[] => {
-  const map = new Map<string, ITreeNode>();
-  const roots: ITreeNode[] = [];
+  const assetNodes: { [key: string]: ITreeNode } = {};
+  assets.forEach(asset => {
+    assetNodes[asset.id] = {
+      id: asset.id,
+      name: asset.name,
+      type: 'asset',
+      status: asset.status,
+      sensorType: asset.sensorType,
+      gatewayId: asset.gatewayId,
+      children: [],
+    };
+  });
+  const locationNodes: { [key: string]: ITreeNode } = {};
   locations.forEach(location => {
-    map.set(location.id, {
+    locationNodes[location.id] = {
       id: location.id,
       name: location.name,
       type: 'location',
-      children: []
-    });
+      children: [],
+    };
   });
 
   assets.forEach(asset => {
-    map.set(asset.id, {
-      id: asset.id,
-      name: asset.name,
-      type: asset.sensorType ? 'component' : 'asset',
-      children: []
-    });
-  });
-
-  assets.forEach(asset => {
-    if (asset.locationId) {
-      const locationNode = map.get(asset.locationId);
-      if (locationNode) {
-        locationNode.children!.push(map.get(asset.id)!);
-      }
-    } else if (asset.parentId) {
-      const parentAssetNode = map.get(asset.parentId);
-      if (parentAssetNode) {
-        parentAssetNode.children!.push(map.get(asset.id)!);
-      }
+    if (asset.locationId && locationNodes[asset.locationId]) {
+      locationNodes[asset.locationId].children!.push(assetNodes[asset.id]);
     }
   });
 
+  const rootNodes: ITreeNode[] = [];
   locations.forEach(location => {
     if (location.parentId) {
-      const parentLocationNode = map.get(location.parentId);
-      if (parentLocationNode) {
-        parentLocationNode.children!.push(map.get(location.id)!);
+      if (locationNodes[location.parentId]) {
+        locationNodes[location.parentId].children!.push(locationNodes[location.id]);
       }
     } else {
-
-      roots.push(map.get(location.id)!);
-    }
-  });
-  assets.forEach(asset => {
-    if (!asset.parentId && !asset.locationId) {
-      roots.push(map.get(asset.id)!);
+      rootNodes.push(locationNodes[location.id]);
     }
   });
 
-  return roots;
+  return rootNodes;
 }
