@@ -1,15 +1,9 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, MapPin, Box, PackageOpen } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { ITreeNode } from '../types';
-import ElipseGreen from '../assets/ElipseGreen.svg'
-import ElipseRed from '../assets/ElipseRed.svg'
 
-import BoltGreen from '../assets/BoltGreen.svg'
-import BoltRed from '../assets/BoltRed.svg'
-
-import Location from '../assets/Location.svg'
-import Cube from '../assets/Cube.svg'
-import Component from '../assets/Component.png'
+import { getSensorIcon } from '../utils/getSensorIcon';
+import { getIconTree } from '../utils/getIconTree';
 
 interface ITreeNodeProps {
   node: ITreeNode;
@@ -20,19 +14,7 @@ const TreeNode: React.FC<ITreeNodeProps> = ({ node, onNodeSelect }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  const getIcon = (node: ITreeNode) => {
-
-  switch (true) {
-    case node.type.includes('location'):
-      return <img src={Location} alt="Location" />;
-    case node.type.includes('asset'):
-      return <img src={Cube} alt="Location" />;
-    case node.type.includes('component'):
-      return <img src={Component} alt="Component" />;
-    default:
-      return null;
-  }
-};
+  const icon = getSensorIcon(node.sensorType ?? '', node.status ?? '');
 
   return (
     <div className="ml-4">
@@ -42,21 +24,11 @@ const TreeNode: React.FC<ITreeNodeProps> = ({ node, onNodeSelect }) => {
             {isOpen ? <ChevronDown /> : <ChevronUp />}
           </span>
         )}
-
-          <span>{getIcon(node)}</span>
+          <span>{getIconTree(node)}</span>
           <span onClick={() => onNodeSelect(node)} className="cursor-pointer">
             {node.name}
           </span>
-            {node.sensorType === 'energy' &&  node.status === 'operating'?
-              <img className='mt-1' src={BoltGreen} alt=""/> :
-              node.sensorType === 'energy' && node.status === 'alert' ?
-              <img className='mt-1' src={BoltRed} alt=""/> : 
-              node.sensorType === 'vibration' &&  node.status === 'operating'?
-              <img className='mt-1' src={ElipseGreen} alt=""/> :
-              node.sensorType === 'vibration' && node.status === 'alert' ?
-              <img className='mt-1' src={ElipseRed} alt=""/> :
-              null
-            }
+            {icon && <img className='mt-1' src={icon} alt={`Sensor status ${icon}`}/>}
       </div>
       {isOpen && node.children && (
         <div className="ml-4">

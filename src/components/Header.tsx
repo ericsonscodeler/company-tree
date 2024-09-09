@@ -35,7 +35,7 @@ export default function Header() {
       <div className='flex flex-row justify-between w-full px-6'>
         <img src={Logo} alt="logo tractian" />
       {isLoading ? (
-        <p>Loading</p>
+        <p className='text-white font-bold'>Carregando...</p>
       ) : data ? (
         <div className='flex flex-row space-x-4'>
           {data.map((company) => (
@@ -50,9 +50,9 @@ export default function Header() {
             </div>
           ))}
         </div>
-      ) : (
-        <p>Error</p>
-      )}
+      ) : error ? (
+        <p className='text-white font-bold'>Não foi possível carregar os dados das empresas.</p>
+      ): null}
     </div>
     </div>
   )

@@ -2,13 +2,14 @@ import { useParams, useLocation } from "react-router-dom";
 import { useQuery } from 'react-query';
 import { Input } from "../Components/Input";
 import { IAsset, ILocation, ITreeNode } from "../types";
-import { buildTree } from "../utils/functionBuildTree";
+import { buildTree } from "../utils/buildTree";
 import { Tree } from "../components/Tree";
 import { useEffect, useState } from "react";
 import { Details } from "../components/Details";
 
 import Bolt from '../assets/Bolt.svg';
 import Critice from '../assets/Critice.svg';
+import { filterByName } from "../utils/filterByName";
 
 export const Company = () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ export const Company = () => {
   const [filterType, setFilterType] = useState<string | null>(null);
 
   const applyFilters = (nodes: ITreeNode[]): ITreeNode[] => {
-  const filterTree = (node: ITreeNode): ITreeNode | null => {
+    const filterTree = (node: ITreeNode): ITreeNode | null => {
     const passesFilter = !filterType || 
                          (filterType === 'energySensors' && node.sensorType === 'energy') || 
                          (filterType === 'criticalStatus' && node.status === 'alert');
@@ -38,22 +39,6 @@ export const Company = () => {
 
   return nodes.map(filterTree).filter(node => node !== null) as ITreeNode[];
 };
-
-
-  const filterByName = (nodes: ITreeNode[], term: string): ITreeNode[] => {
-    return nodes
-      .map(node => {
-        const filteredChildren = node.children ? filterByName(node.children, term) : [];
-        if (node.name.toLowerCase().includes(term.toLowerCase()) || filteredChildren.length > 0) {
-          return {
-            ...node,
-            children: filteredChildren,
-          };
-        }
-        return null;
-      })
-      .filter(node => node !== null) as ITreeNode[];
-  };
 
   const handleNodeSelect = (node: ITreeNode) => {
     setSelectedNode(node);
@@ -126,7 +111,10 @@ export const Company = () => {
             <Tree nodes={treeData} onNodeSelect={handleNodeSelect} />}
         </div>
         <div className="w-full h-full bg-white border border-sky-500">
-          {selectedNode ? <Details node={selectedNode} /> : <p>Selecione um componente para ver os detalhes</p>}
+          {selectedNode ? <Details node={selectedNode} /> : 
+          <div className="flex justify-center items-center w-full h-full">
+            <p>Selecione um componente para ver os detalhes</p>
+          </div>}
         </div>
       </div>
     </div>
