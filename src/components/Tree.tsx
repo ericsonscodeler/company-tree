@@ -1,4 +1,4 @@
-import TreeNode from './TreeNode';
+import {TreeNode} from './TreeNode';
 import {ITreeNode} from '../types'
 interface TreeProps {
   nodes: ITreeNode[];

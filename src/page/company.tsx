@@ -107,7 +107,7 @@ export const Company = () => {
           <Input searchTerm={searchTerm} setSearchTerm={handleSearchTermChange} />
           {loadingLocations || loadingAssets ? 
             <p>Loading...</p> : errorLocations || errorAssets ? 
-            <p>Error loading data</p> : 
+            <p>Erro ao carregar dados</p> : 
             <Tree nodes={treeData} onNodeSelect={handleNodeSelect} />}
         </div>
         <div className="w-full h-full bg-white border border-sky-500">
