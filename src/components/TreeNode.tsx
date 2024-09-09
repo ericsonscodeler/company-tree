@@ -9,7 +9,7 @@ import BoltRed from '../assets/BoltRed.svg'
 
 import Location from '../assets/Location.svg'
 import Cube from '../assets/Cube.svg'
-import Codepen from '../assets/Codepen.svg'
+import Component from '../assets/Component.png'
 
 interface ITreeNodeProps {
   node: ITreeNode;
@@ -28,7 +28,7 @@ const TreeNode: React.FC<ITreeNodeProps> = ({ node, onNodeSelect }) => {
     case node.type.includes('asset'):
       return <img src={Cube} alt="Location" />;
     case node.type.includes('component'):
-      return <img src={Codepen} alt="Codepn" />;
+      return <img src={Component} alt="Component" />;
     default:
       return null;
   }

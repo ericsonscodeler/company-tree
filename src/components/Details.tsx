@@ -4,6 +4,8 @@ import ElipseRed from '../assets/ElipseRed.svg'
 
 import Receptor from '../assets/Receptor.svg'
 import Sensor from '../assets/Sensor.svg'
+import Motor from '../assets/Motor.png'
+
 
 interface DetailsProps {
   node: ITreeNode;
@@ -18,10 +20,10 @@ export const Details: React.FC<DetailsProps> = ({ node }) => {
         <img 
         className="ml-2"
         alt='operating' src={ElipseGreen} height={8} width={8}/> 
-        : node.status === 'alert' ? <img alt='alert' src={ElipseRed} height={8} width={8}/> : null}
+        : node.status === 'alert' ? <img alt='alert' src={ElipseRed} height={8} width={8} className="ml-2"/> : null}
     </div>
     <div className='flex h-full w-full'>
-        <div className='border h-56 w-80 m-6'/>
+        <img  src={Motor} className='h-56 w-80 m-6'/>
         <div className='flex flex-col m-9 h-full'>
           <div className='pb-10'>
             <h3 className='font-inter text-xl font-semibold leading-6 text-left mb-4'>Tipo de Equipamento</h3>
