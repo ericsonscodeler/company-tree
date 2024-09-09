@@ -72,6 +72,19 @@ export const Company = () => {
     setSearchTerm(term);
   };
 
+  const FilterButton = ({ icon, label, filterKey }: { icon: string, label: string, filterKey: string }) => (
+      <div className={`flex w-40 h-10 border ${filterType === filterKey ? 'border-blue-700 bg-blue-200' : 'border-gray-200'} rounded-md items-center`}>
+        <img src={icon} alt={label} className="ml-3" />
+        <button 
+          type="button"
+          className="flex-1 font-inter text-sm font-semibold leading-5 text-center"
+          onClick={() => handleFilterChange(filterKey)}
+        >
+          {label}
+        </button>
+    </div>
+  );
+
   return (
     <div>
       <div className="flex flex-row p-5 items-center justify-between w-full">
@@ -80,26 +93,8 @@ export const Company = () => {
           <span className="text-base ml-2 mt-1">{name}</span>
         </div>
         <div className="flex flex-row space-x-2">
-          <div className={`flex w-40 h-10 border ${filterType === 'energySensors' ? 'border-blue-700' : 'border-gray-200'} rounded-md items-center`}>
-            <img src={Bolt} alt="Bolt" className="ml-3" />
-            <button 
-              type="button"
-              className="flex-1 font-inter text-sm font-semibold leading-5 text-center"
-              onClick={() => handleFilterChange('energySensors')}
-            >
-              Sensor de Energia
-            </button>
-          </div>
-          <div className={`flex w-40 h-10 border ${filterType === 'criticalStatus' ? 'border-blue-700' : 'border-gray-200'} rounded-md items-center`}>
-            <img src={Critice} alt="Critice" className="ml-3" />
-            <button 
-              type="button"
-              className="flex-1 font-inter text-sm font-semibold leading-5 text-center"
-              onClick={() => handleFilterChange('criticalStatus')}
-            >
-              Crítico
-            </button>
-          </div>
+          <FilterButton icon={Bolt} label="Sensor de Energia" filterKey="energySensors" />
+          <FilterButton icon={Critice} label="Crítico" filterKey="criticalStatus" />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full h-full p-4 bg-gray-300">
