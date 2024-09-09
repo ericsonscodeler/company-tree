@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
+# Application Overview
+This application is designed to facilitate efficient asset management and maintenance in industries, providing a visual representation of an asset hierarchy.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
+1. Asset Page
+    The core feature of the application is the Asset Tree, which visually represents the company's asset hierarchy in a dynamic tree structure.
 
-Currently, two official plugins are available:
+2. Sub-Features
+    A dynamic tree displays the relationships between components, assets, and locations in the company’s asset hierarchy.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. Filters:
 
-## Expanding the ESLint configuration
+    Text Search:
+    Users can search for specific components, assets, or locations within the tree.
+    Energy Sensors Filter:
+    Filters the tree to display only energy sensors, providing a focused view.
+    Critical Sensor Status Filter:
+    Highlights assets with critical sensor status for immediate attention.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **React**
+- **React Query**
+- **React Router**
+- **TypeScript**
+- **TailwindCSS**
+
+## Project Structure
+
+```
+├── src/
+│   ├── assets/               # Static assets (images, logos, etc.)
+│   ├── components/           # Reusable UI components
+│   ├── pages/                # Application pages (Home, Company, etc.)
+│   ├── types/                # TypeScript types used across the app
+│   ├── App.tsx               # Main entry component
+│   └── index.tsx             # React entry point
+├── README.md                 # Project documentation
+├── package.json              # Project dependencies and scripts
+└── tsconfig.json             # TypeScript configuration
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Installation and Setup
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **Clone the Repository**:
+    ```
+    https://github.com/ericsonscodeler/company-tree.git
+    cd company-tree
+    ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2. **Install Dependencies**:
+    ```
+    npm install
+    ```
+
+3. **Start the Application**:
+    ```
+    npm run dev
+    ```
+
+4. **View in Browser**:
+    Open your browser and go to `http://localhost:5173/` to view the app.
+
+## API Setup
+
+The project uses a fake API to retrieve company data. You can adjust the API endpoint as needed. The current API URL is:
+
+```
+http://fake-api.tractian.com/companies
 ```
